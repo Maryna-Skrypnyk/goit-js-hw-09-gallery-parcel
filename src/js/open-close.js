@@ -1,49 +1,8 @@
-import './sass/main.scss';
+import lightbox from '../index';
+import lightboxImgEl from '../index';
+import arrGalleryListCopy from '../index';
 
-import galleryItems from './js/gallery-items';
-
-const galleryList = document.querySelector('ul.js-gallery');
-const lightbox = document.querySelector('.js-lightbox');
-const overlay = document.querySelector('.lightbox__overlay');
-const lightboxImgEl = document.querySelector('img.lightbox__image');
-const btnCloseEl = document.querySelector(
-  'button[data-action="close-lightbox"]',
-);
-
-const galleryMarkup = makeGalleryMarkup(galleryItems);
-
-galleryList.insertAdjacentHTML('beforeend', galleryMarkup);
-
-galleryList.addEventListener('click', onLightboxOpenClick);
-btnCloseEl.addEventListener('click', imageClose);
-overlay.addEventListener('click', imageClose);
-
-function makeGalleryMarkup(images) {
-  return images
-    .map(({ preview, original, description }) => {
-      return `<li class="gallery__item">
-  <a
-    class="gallery__link"
-    href="${original}"
-  >
-    <img
-      class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`;
-    })
-    .join('');
-}
-
-const arrGalleryList = galleryList.querySelectorAll('.gallery__image');
-const arrGalleryListCopy = [...arrGalleryList];
-
-console.log(arrGalleryList);
-
-function onLightboxOpenClick(e) {
+export function onLightboxOpenClick(e) {
   e.preventDefault();
 
   const imgClick = e.target;
@@ -54,7 +13,7 @@ function onLightboxOpenClick(e) {
   imageOpen(imgClick.dataset.source, imgClick.alt, imgClick);
 }
 
-function imageOpen(source, alt, image) {
+export function imageOpen(source, alt, image) {
   lightbox.classList.add('is-open');
 
   lightboxImgEl.src = source;
@@ -65,7 +24,7 @@ function imageOpen(source, alt, image) {
   window.addEventListener('keydown', onLightboxChangeByKey);
 }
 
-function imageClose() {
+export function imageClose() {
   lightbox.classList.remove('is-open');
 
   lightboxImgEl.src = '';
@@ -76,7 +35,7 @@ function imageClose() {
   window.removeEventListener('keydown', onLightboxChangeByKey);
 }
 
-function onLightboxChangeByKey(e) {
+export function onLightboxChangeByKey(e) {
   const ESC_KEY_CODE = 'Escape';
   const ARROW_LEFT_KEY_CODE = 'ArrowLeft';
   const ARROW_RIGHT_KEY_CODE = 'ArrowRight';
@@ -94,7 +53,7 @@ function onLightboxChangeByKey(e) {
   }
 }
 
-function lightboxImageMove(step) {
+export function lightboxImageMove(step) {
   const currentIndex = Number(lightboxImgEl.dataset.index);
   let afterStepIndex = currentIndex + step;
 

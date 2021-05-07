@@ -1,6 +1,4 @@
-import './sass/main.scss';
-
-import galleryItems from './js/gallery-items';
+import galleryItems from './gallery-items.js';
 
 const galleryList = document.querySelector('ul.js-gallery');
 const lightbox = document.querySelector('.js-lightbox');
